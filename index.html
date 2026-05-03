@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Authority — For Founders & CEOs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --white: #FAFAFA;
+    --blue: #1D4ED8;
+    --blue-light: #3B82F6;
+    --blue-glow: rgba(59,130,246,0.18);
+    --grey: #6B7280;
+    --grey-light: #E5E7EB;
+    --card-bg: #111217;
+    --border: rgba(255,255,255,0.07);
+    --max: 1140px;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  ::selection { background: var(--blue); color: #fff; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+
+  /* ── UTILITY ── */
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+  .serif { font-family: 'Instrument Serif', serif; }
+  .blue { color: var(--blue-light); }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    border: 1px solid rgba(59,130,246,0.3);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    background: rgba(59,130,246,0.06);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulse { 0%,100% { opacity:.5; } 50% { opacity:1; } }
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes glowPulse {
+    0%,100% { box-shadow: 0 0 40px rgba(59,130,246,0.15); }
+    50%      { box-shadow: 0 0 80px rgba(59,130,246,0.35); }
+  }
+  @keyframes counterUp { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes lineGrow { from { width: 0; } to { width: 100%; } }
+  @keyframes float {
+    0%,100% { transform: translateY(0px); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 0;
+    transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(8,8,8,0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--blue-light); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    background: var(--blue);
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .nav-cta:hover {
+    background: var(--blue-light);
+    box-shadow: 0 0 24px rgba(59,130,246,0.4);
+    transform: translateY(-1px);
+  }
+  .nav-mobile-btn { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-mobile-btn span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 0 80px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 70% 55% at 55% 40%, rgba(29,78,216,0.13) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 80% 70%, rgba(59,130,246,0.07) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 820px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    padding: 7px 14px; border: 1px solid var(--border); border-radius: 20px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s cubic-bezier(.22,1,.36,1) 0.2s both;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
+  .hero-h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(42px, 6.5vw, 76px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    animation: fadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.35s both;
+  }
+  .hero-h1 em { font-style: italic; color: var(--blue-light); }
+  .hero-sub {
+    font-size: clamp(17px, 2vw, 20px);
+    color: rgba(255,255,255,0.5);
+    max-width: 560px;
+    line-height: 1.65;
+    margin-bottom: 44px;
+    animation: fadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.5s both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.65s both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 500;
+    color: #fff; background: var(--blue);
+    padding: 15px 30px; border-radius: 10px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, box-shadow 0.25s, transform 0.15s;
+    animation: glowPulse 3s ease-in-out infinite;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: var(--blue-light); box-shadow: 0 0 40px rgba(59,130,246,0.5); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 400;
+    color: rgba(255,255,255,0.65);
+    padding: 15px 24px; border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: color 0.2s, border-color 0.2s, transform 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .btn-secondary:hover { color: var(--white); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+  .hero-scroll-hint {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    animation: fadeIn 1s 1.5s both;
+  }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent); }
+
+  /* ── TRUST STRIP ── */
+  #trust {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.015);
+  }
+  .trust-inner {
+    display: flex; align-items: center; justify-content: center;
+    gap: 48px; flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.02em;
+  }
+  .trust-item svg { opacity: 0.5; flex-shrink: 0; }
+  .trust-divider { width: 1px; height: 28px; background: var(--border); }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 112px 0; }
+  .section-header { text-align: center; margin-bottom: 72px; }
+  .section-header h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(34px, 4.5vw, 54px);
+    line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px;
+  }
+  .section-header p { font-size: 17px; color: rgba(255,255,255,0.45); max-width: 520px; margin: 0 auto; }
+
+  /* ── SERVICES ── */
+  #services { background: #0C0C0E; }
+  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 44px 40px;
+    transition: border-color 0.3s, transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 0%, rgba(59,130,246,0.08), transparent 60%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .service-card:hover { border-color: rgba(59,130,246,0.35); transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(29,78,216,0.15); border: 1px solid rgba(59,130,246,0.2);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .service-card:hover .service-icon { background: rgba(29,78,216,0.28); border-color: rgba(59,130,246,0.45); }
+  .service-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .service-card p { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1.65; }
+  .service-arrow {
+    position: absolute; right: 36px; bottom: 36px;
+    color: rgba(255,255,255,0.15);
+    transition: color 0.3s, transform 0.3s;
+    font-size: 20px;
+  }
+  .service-card:hover .service-arrow { color: var(--blue-light); transform: translate(4px, -4px); }
+
+  /* ── METRICS ── */
+  #metrics { position: relative; overflow: hidden; }
+  .metrics-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(29,78,216,0.09), transparent 65%);
+  }
+  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .metric-block {
+    text-align: center; padding: 60px 40px;
+    border: 1px solid var(--border); border-radius: 4px;
+    background: rgba(255,255,255,0.02);
+    transition: background 0.3s;
+  }
+  .metric-block:hover { background: rgba(255,255,255,0.04); }
+  .metric-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(48px, 6vw, 72px);
+    color: var(--white);
+    line-height: 1; margin-bottom: 10px;
+    display: block;
+  }
+  .metric-num span { color: var(--blue-light); }
+  .metric-label { font-size: 14px; color: rgba(255,255,255,0.4); letter-spacing: 0.04em; }
+
+  /* ── BEFORE / AFTER ── */
+  #proof { background: #0C0C0E; }
+  .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .ba-col { display: flex; flex-direction: column; gap: 20px; }
+  .ba-header {
+    text-align: center; padding: 12px;
+    border-radius: 8px 8px 0 0; font-size: 12px;
+    font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .ba-before .ba-header { background: rgba(239,68,68,0.1); color: #f87171; }
+  .ba-after .ba-header { background: rgba(34,197,94,0.1); color: #4ade80; }
+  .ba-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 28px;
+  }
+  .ba-card-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 10px; }
+  .ba-card-val { font-size: 28px; font-family: 'Instrument Serif', serif; margin-bottom: 6px; }
+  .ba-card-sub { font-size: 13px; color: rgba(255,255,255,0.4); }
+  .ba-before .ba-card-val { color: #f87171; }
+  .ba-after .ba-card-val { color: #4ade80; }
+
+  /* ── BAR CHART ── */
+  .bar-chart { margin-top: 48px; }
+  .bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .bar-name { width: 160px; font-size: 13px; color: rgba(255,255,255,0.5); flex-shrink: 0; text-align: right; }
+  .bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; position: relative; }
+  .bar-fill { height: 100%; border-radius: 4px; width: 0; transition: width 1.4s cubic-bezier(.22,1,.36,1); }
+  .bar-fill.blue  { background: linear-gradient(90deg, #1D4ED8, #3B82F6); }
+  .bar-fill.green { background: linear-gradient(90deg, #059669, #34D399); }
+  .bar-val { width: 48px; font-size: 13px; font-weight: 500; color: var(--white); }
+
+  /* ── CASE STUDIES ── */
+  #cases { }
+  .cases-list { display: flex; flex-direction: column; gap: 16px; }
+  .case-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+    overflow: hidden; transition: border-color 0.3s;
+  }
+  .case-card:hover { border-color: rgba(59,130,246,0.25); }
+  .case-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 36px; cursor: pointer;
+  }
+  .case-left { display: flex; align-items: center; gap: 20px; }
+  .case-num { font-size: 12px; color: var(--blue-light); letter-spacing: 0.1em; opacity: 0.7; }
+  .case-name { font-size: 18px; font-weight: 500; }
+  .case-role { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+  .case-result {
+    font-size: 22px; font-family: 'Instrument Serif', serif; color: var(--blue-light);
+    white-space: nowrap;
+  }
+  .case-toggle { font-size: 20px; color: rgba(255,255,255,0.3); margin-left: 24px; transition: transform 0.3s; }
+  .case-card.open .case-toggle { transform: rotate(45deg); color: var(--blue-light); }
+  .case-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.55s cubic-bezier(.22,1,.36,1);
+    border-top: 0px solid var(--border);
+  }
+  .case-card.open .case-body { max-height: 400px; border-top-width: 1px; }
+  .case-body-inner {
+    padding: 32px 36px 36px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  }
+  .case-step h4 { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 8px; opacity: 0.7; }
+  .case-step p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* ── PROCESS ── */
+  #process { background: #0C0C0E; }
+  .process-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 30px; left: 10%; right: 10%;
+    height: 1px; background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  }
+  .process-step { text-align: center; padding: 0 16px; position: relative; }
+  .process-num {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--card-bg); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px; font-family: 'Instrument Serif', serif;
+    font-size: 22px; position: relative; z-index: 1;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .process-step:hover .process-num {
+    border-color: var(--blue-light); background: rgba(59,130,246,0.12);
+    color: var(--blue-light);
+  }
+  .process-step h3 { font-size: 14px; font-weight: 500; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .process-step p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.55; }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .testi-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+    padding: 36px; position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.35s cubic-bezier(.22,1,.36,1);
+  }
+  .testi-card:hover { border-color: rgba(59,130,246,0.25); transform: translateY(-4px); }
+  .testi-quote { font-size: 48px; font-family: 'Instrument Serif', serif; color: rgba(59,130,246,0.15); line-height: 1; margin-bottom: 16px; }
+  .testi-text { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 28px; }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #1D4ED8, #7C3AED);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Instrument Serif', serif; font-size: 17px; color: #fff; flex-shrink: 0;
+  }
+  .testi-name { font-size: 14px; font-weight: 500; }
+  .testi-role { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+  .testi-stars { display: flex; gap: 3px; margin-top: 12px; }
+  .testi-stars span { color: #FBBF24; font-size: 13px; }
+
+  /* ── WHY ── */
+  #why { background: #0C0C0E; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .why-points { display: flex; flex-direction: column; gap: 32px; }
+  .why-point { display: flex; gap: 20px; }
+  .why-point-icon {
+    width: 44px; height: 44px; flex-shrink: 0; border-radius: 10px;
+    background: rgba(29,78,216,0.12); border: 1px solid rgba(59,130,246,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .why-point-text h3 { font-size: 17px; font-weight: 500; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .why-point-text p { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+  .why-visual {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+    padding: 44px 36px; animation: float 6s ease-in-out infinite;
+  }
+  .why-chart-label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 24px; }
+  .why-bar-group { display: flex; flex-direction: column; gap: 14px; }
+  .why-bar-row { display: flex; flex-direction: column; gap: 7px; }
+  .why-bar-row-label { display: flex; justify-content: space-between; font-size: 13px; }
+  .why-bar-row-label span:last-child { color: var(--blue-light); font-weight: 500; }
+  .why-bar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+  .why-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #1D4ED8, #60A5FA); width: 0; transition: width 1.6s cubic-bezier(.22,1,.36,1); }
+
+  /* ── FINAL CTA ── */
+  #cta {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #0A0A14, #080814);
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 70% at 50% 60%, rgba(29,78,216,0.18), transparent 65%),
+      radial-gradient(ellipse 30% 30% at 20% 20%, rgba(124,58,237,0.08), transparent 50%);
+  }
+  .cta-content { position: relative; z-index: 1; text-align: center; max-width: 720px; margin: 0 auto; }
+  .cta-content h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  .cta-content p { font-size: 18px; color: rgba(255,255,255,0.45); margin-bottom: 44px; }
+  .cta-urgency {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #FBBF24; margin-bottom: 16px;
+  }
+  .cta-urgency-dot { width: 6px; height: 6px; background: #FBBF24; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 0; border-top: 1px solid var(--border);
+    background: var(--black);
+  }
+  .footer-inner {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { font-family: 'Instrument Serif', serif; font-size: 18px; color: rgba(255,255,255,0.5); }
+  .footer-logo span { color: var(--blue-light); }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { font-size: 13px; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.6); }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: 1fr; gap: 1px; }
+    .ba-grid { grid-template-columns: 1fr; }
+    .ba-before { display: none; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .process-steps::before { display: none; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .nav-mobile-btn { display: flex; }
+    .case-body-inner { grid-template-columns: 1fr 1fr; }
+    .hero-h1 { font-size: clamp(36px, 10vw, 54px); }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 72px 0; }
+    .container { padding: 0 20px; }
+    .hero-actions { flex-direction: column; }
+    .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
+    .trust-inner { gap: 20px; }
+    .trust-divider { display: none; }
+    .case-body-inner { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .case-header { flex-wrap: wrap; gap: 12px; }
+    .bar-name { width: 100px; font-size: 12px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">Auth<span>ori</span>ty</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#proof">Results</a></li>
+      <li><a href="#cases">Case Studies</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+    </ul>
+    <a href="https://wa.me/918825756068" target="_blank" rel="noopener" class="nav-cta">Work With Me</a>
+    <div class="nav-mobile-btn" id="mobileBtn">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Accepting new clients — Q3 2025
+      </div>
+      <h1 class="hero-h1">
+        Helping Founders &amp; CEOs<br>
+        Build <em>Authority</em> on LinkedIn<br>
+        That Converts Into Opportunities
+      </h1>
+      <p class="hero-sub">
+        Strategic content, profile positioning, and account handling that drives visibility and consistent inbound growth — so you focus on leading.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/918825756068" target="_blank" rel="noopener" class="btn-primary">
+          Work With Me
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="#cases" class="btn-secondary">
+          View Results
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div id="trust">
+  <div class="container">
+    <div class="trust-inner reveal">
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Managing 20+ CEO Profiles
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        Driving Consistent Inbound Leads
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Done-For-You Execution
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Average 3× Reach Growth
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">What I Do</div>
+      <h2>End-to-End LinkedIn<br>Account Management</h2>
+      <p>Four pillars that turn your profile into a client-generating asset.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>Profile Optimization</h3>
+        <p>Transform your profile from résumé to revenue engine — headline, banner, about section, and featured content crafted to position you as the go-to authority in your space.</p>
+        <span class="service-arrow">↗</span>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Content Strategy & Creation</h3>
+        <p>CEO-voice content engineered for virality and conversion — posts, carousels, thought leadership pieces, and newsletters written entirely for you, posted consistently.</p>
+        <span class="service-arrow">↗</span>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Account Handling</h3>
+        <p>Full white-glove management of your LinkedIn — DM responses, comment engagement, connection requests, and daily activity handled by a dedicated strategist on your behalf.</p>
+        <span class="service-arrow">↗</span>
+      </div>
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h3>Growth & Positioning</h3>
+        <p>Strategic follower growth, audience targeting, and positioning refinement using data-driven insights — so your LinkedIn becomes a compounding asset month over month.</p>
+        <span class="service-arrow">↗</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section id="metrics">
+  <div class="metrics-bg"></div>
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Proof of Work</div>
+      <h2>Numbers That<br>Actually Matter</h2>
+      <p>Aggregate results across actively managed CEO accounts.</p>
+    </div>
+    <div class="metrics-grid reveal">
+      <div class="metric-block">
+        <b class="metric-num"><span class="counter" data-target="312">0</span>%</b>
+        <div class="metric-label">Average engagement increase within 90 days</div>
+      </div>
+      <div class="metric-block">
+        <b class="metric-num"><span class="counter" data-target="20">0</span>+</b>
+        <div class="metric-label">Active CEO &amp; Founder profiles managed</div>
+      </div>
+      <div class="metric-block">
+        <b class="metric-num"><span class="counter" data-target="8">0</span>x</b>
+        <div class="metric-label">Average inbound lead growth per quarter</div>
+      </div>
+    </div>
+    <div class="bar-chart reveal">
+      <div class="bar-row">
+        <div class="bar-name">Impressions</div>
+        <div class="bar-track"><div class="bar-fill blue" data-width="88"></div></div>
+        <div class="bar-val">+312%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Inbound Leads</div>
+        <div class="bar-track"><div class="bar-fill green" data-width="75"></div></div>
+        <div class="bar-val">+210%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Profile Views</div>
+        <div class="bar-track"><div class="bar-fill blue" data-width="62"></div></div>
+        <div class="bar-val">+175%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Follower Growth</div>
+        <div class="bar-track"><div class="bar-fill green" data-width="50"></div></div>
+        <div class="bar-val">+140%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section id="proof">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Transformation</div>
+      <h2>Before vs. After</h2>
+      <p>The measurable difference a strategic LinkedIn presence makes.</p>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-col ba-before reveal">
+        <div class="ba-header">❌ Before Working Together</div>
+        <div class="ba-card">
+          <div class="ba-card-label">Weekly Impressions</div>
+          <div class="ba-card-val">1,200</div>
+          <div class="ba-card-sub">Low reach, minimal visibility</div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-card-label">Inbound Inquiries / Month</div>
+          <div class="ba-card-val">0–2</div>
+          <div class="ba-card-sub">Relying entirely on outbound</div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-card-label">Profile Conversion</div>
+          <div class="ba-card-val">Generic</div>
+          <div class="ba-card-sub">Reads like a résumé, not a brand</div>
+        </div>
+      </div>
+      <div class="ba-col ba-after reveal reveal-delay-2">
+        <div class="ba-header">✅ After 90 Days</div>
+        <div class="ba-card">
+          <div class="ba-card-label">Weekly Impressions</div>
+          <div class="ba-card-val">18,000+</div>
+          <div class="ba-card-sub">Consistent high-reach content</div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-card-label">Inbound Inquiries / Month</div>
+          <div class="ba-card-val">12–20</div>
+          <div class="ba-card-sub">Qualified leads coming to you</div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-card-label">Profile Conversion</div>
+          <div class="ba-card-val">Authority</div>
+          <div class="ba-card-sub">Positions you as the market leader</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="cases">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Case Studies</div>
+      <h2>Real Results,<br>Real Founders</h2>
+      <p>Tap any card to read the full story.</p>
+    </div>
+    <div class="cases-list reveal">
+      <div class="case-card" data-case>
+        <div class="case-header">
+          <div class="case-left">
+            <span class="case-num">01</span>
+            <div>
+              <div class="case-name">SaaS Founder, Series A</div>
+              <div class="case-role">B2B Tech · 3,000 → 22,000 followers</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;margin-left:auto;">
+            <div class="case-result">+640% Reach</div>
+            <div class="case-toggle">+</div>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-body-inner">
+            <div class="case-step"><h4>Problem</h4><p>Invisible profile, zero inbound, spending 4hrs/week on LinkedIn with no ROI.</p></div>
+            <div class="case-step"><h4>Strategy</h4><p>Repositioned from "founder" to "category creator." Built a 90-day content calendar targeting decision-makers.</p></div>
+            <div class="case-step"><h4>Execution</h4><p>3 posts/week, daily engagement, 200 strategic connection requests per month to ICP.</p></div>
+            <div class="case-step"><h4>Result</h4><p>640% reach growth. 14 inbound demos booked in month 3 alone. Closed 3 enterprise deals.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card" data-case>
+        <div class="case-header">
+          <div class="case-left">
+            <span class="case-num">02</span>
+            <div>
+              <div class="case-name">CEO, Professional Services</div>
+              <div class="case-role">Consulting · 0 → 8,400 followers in 6 months</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;margin-left:auto;">
+            <div class="case-result">8 Speaking Gigs</div>
+            <div class="case-toggle">+</div>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-body-inner">
+            <div class="case-step"><h4>Problem</h4><p>New to LinkedIn, no presence, competing against well-established thought leaders in consulting.</p></div>
+            <div class="case-step"><h4>Strategy</h4><p>Carved a niche POV niche. Weekly longform thought leadership pieces + punchy short-form content.</p></div>
+            <div class="case-step"><h4>Execution</h4><p>Profile rebuilt from scratch. Niche hashtag strategy. Consistent commenting in key communities.</p></div>
+            <div class="case-step"><h4>Result</h4><p>Built to 8,400 followers. 8 paid speaking invitations. Named "Top Voice" in category within 5 months.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card" data-case>
+        <div class="case-header">
+          <div class="case-left">
+            <span class="case-num">03</span>
+            <div>
+              <div class="case-name">Co-Founder, DTC Brand</div>
+              <div class="case-role">E-Commerce · Raised $2M citing LinkedIn traction</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;margin-left:auto;">
+            <div class="case-result">$2M Fundraise</div>
+            <div class="case-toggle">+</div>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-body-inner">
+            <div class="case-step"><h4>Problem</h4><p>Needed to build credibility before a fundraise. Investors were Googling — and finding nothing.</p></div>
+            <div class="case-step"><h4>Strategy</h4><p>Investor-facing content showcasing traction, vision, and team. Positioned founder story as the brand moat.</p></div>
+            <div class="case-step"><h4>Execution</h4><p>Structured 60-day content sprint. Targeted VC/angel network for strategic connections and DM outreach.</p></div>
+            <div class="case-step"><h4>Result</h4><p>Multiple investors cited LinkedIn presence as trust signal. Closed $2M seed. 4 intros from LinkedIn directly.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">How It Works</div>
+      <h2>Five Steps to<br>LinkedIn Authority</h2>
+      <p>A proven framework executed entirely for you.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal reveal-delay-1">
+        <div class="process-num">1</div>
+        <h3>Profile Positioning</h3>
+        <p>Audit, rewrite, and optimize every section to signal authority.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="process-num">2</div>
+        <h3>Content Strategy</h3>
+        <p>Build a niche-specific 90-day content calendar aligned to your goals.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="process-num">3</div>
+        <h3>Execution</h3>
+        <p>We write, design, post, and manage everything on your behalf.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-4">
+        <div class="process-num">4</div>
+        <h3>Engagement</h3>
+        <p>Daily comment replies, DM management, and strategic network growth.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-4">
+        <div class="process-num">5</div>
+        <h3>Optimization</h3>
+        <p>Monthly analytics review to double down on what's driving results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" style="background:#0C0C0E;">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Testimonials</div>
+      <h2>What Founders<br>&amp; CEOs Say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">Within 60 days, I had inbound from three enterprise prospects I'd been trying to reach for months. The content felt 100% like me — just sharper and more consistent than I could ever manage alone.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MR</div>
+          <div>
+            <div class="testi-name">Marcus R.</div>
+            <div class="testi-role">CEO, SaaS Platform · 40K followers</div>
+            <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">I was skeptical about paying someone to handle my LinkedIn. Three months later, I've been invited to speak at two conferences and closed a $150K deal that started with a LinkedIn DM. Completely sold.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#059669,#1D4ED8)">SC</div>
+          <div>
+            <div class="testi-name">Sarah C.</div>
+            <div class="testi-role">Founder, Consulting Firm · Series A</div>
+            <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">My investors now regularly send me LinkedIn posts of mine they saw in their feed. That kind of visibility used to be a distant dream. Now it's just Tuesday. Worth every penny of the investment.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#7C3AED,#1D4ED8)">JP</div>
+          <div>
+            <div class="testi-name">James P.</div>
+            <div class="testi-role">Co-Founder, B2B Marketplace</div>
+            <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <div class="tag reveal">Why It Works</div>
+        <h2 class="serif reveal" style="font-size:clamp(32px,4vw,50px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:48px;">
+          A system built for<br>executives, not influencers.
+        </h2>
+        <div class="why-points">
+          <div class="why-point reveal reveal-delay-1">
+            <div class="why-point-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="why-point-text">
+              <h3>CEO-Focused Branding</h3>
+              <p>Content strategy designed for B2B authority and executive positioning — not vanity metrics or viral stunts.</p>
+            </div>
+          </div>
+          <div class="why-point reveal reveal-delay-2">
+            <div class="why-point-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <div class="why-point-text">
+              <h3>Engineered for Opportunities</h3>
+              <p>Every post, comment, and DM is crafted to attract deals, investors, partnerships, and speaking opportunities.</p>
+            </div>
+          </div>
+          <div class="why-point reveal reveal-delay-3">
+            <div class="why-point-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <div class="why-point-text">
+              <h3>100% Done-For-You</h3>
+              <p>You review and approve — we do everything else. Your time stays where it belongs: running your company.</p>
+            </div>
+          </div>
+          <div class="why-point reveal reveal-delay-4">
+            <div class="why-point-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="why-point-text">
+              <h3>Results in 90 Days</h3>
+              <p>Measurable traction guaranteed within the first quarter — or we keep working until you see it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-visual reveal reveal-delay-2">
+        <div class="why-chart-label">Growth Timeline — Typical Client</div>
+        <div class="why-bar-group">
+          <div class="why-bar-row">
+            <div class="why-bar-row-label"><span>Month 1 — Foundation</span><span>+40%</span></div>
+            <div class="why-bar-track"><div class="why-bar-fill" data-width="25"></div></div>
+          </div>
+          <div class="why-bar-row">
+            <div class="why-bar-row-label"><span>Month 2 — Momentum</span><span>+130%</span></div>
+            <div class="why-bar-track"><div class="why-bar-fill" data-width="48"></div></div>
+          </div>
+          <div class="why-bar-row">
+            <div class="why-bar-row-label"><span>Month 3 — Authority</span><span>+280%</span></div>
+            <div class="why-bar-track"><div class="why-bar-fill" data-width="68"></div></div>
+          </div>
+          <div class="why-bar-row">
+            <div class="why-bar-row-label"><span>Month 6 — Market Leader</span><span>+500%+</span></div>
+            <div class="why-bar-track"><div class="why-bar-fill" data-width="92"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:36px;padding-top:28px;border-top:1px solid var(--border);display:flex;gap:24px;">
+          <div>
+            <div style="font-family:'Instrument Serif',serif;font-size:32px;color:#3B82F6;">4.9</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;">Client Satisfaction</div>
+          </div>
+          <div style="width:1px;background:var(--border);"></div>
+          <div>
+            <div style="font-family:'Instrument Serif',serif;font-size:32px;">100%</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;">Retention Rate</div>
+          </div>
+          <div style="width:1px;background:var(--border);"></div>
+          <div>
+            <div style="font-family:'Instrument Serif',serif;font-size:32px;color:#4ade80;">3×</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;">Avg. ROI Year 1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="container">
+    <div class="cta-content">
+      <div class="cta-urgency reveal">
+        <span class="cta-urgency-dot"></span>
+        Only 3 Onboarding Slots Remaining This Quarter
+      </div>
+      <h2 class="reveal reveal-delay-1">
+        Position Your LinkedIn<br>
+        Like a <em class="serif" style="font-style:italic;color:var(--blue-light)">Market Leader</em>
+      </h2>
+      <p class="reveal reveal-delay-2">Stop leaving opportunities on the table. Let's build the LinkedIn presence your company deserves.</p>
+      <div class="reveal reveal-delay-3" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="https://wa.me/918825756068" target="_blank" rel="noopener" class="btn-primary" style="font-size:16px;padding:17px 36px;background:#25D366;animation:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.137.563 4.14 1.537 5.874L0 24l6.27-1.507A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.785 9.785 0 01-5.032-1.388l-.36-.214-3.733.897.934-3.617-.235-.373A9.786 9.786 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+          Let's Collaborate on WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-logo">Auth<span>ori</span>ty</div>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#cases">Case Studies</a>
+      <a href="#process">Process</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="https://wa.me/918825756068" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+    <div class="footer-copy">© 2025 Authority. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // ── NAV SCROLL ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // animate bars inside revealed elements
+        e.target.querySelectorAll('.bar-fill[data-width]').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 200);
+        });
+        e.target.querySelectorAll('.why-bar-fill[data-width]').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 300);
+        });
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Trigger bars for elements already visible on load
+  document.querySelectorAll('.bar-fill[data-width], .why-bar-fill[data-width]').forEach(bar => {
+    const parent = bar.closest('.reveal');
+    if (!parent) { bar.style.width = bar.dataset.width + '%'; }
+  });
+
+  // ── COUNTER ANIMATION ──
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        const duration = 1800;
+        const step = target / (duration / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = Math.floor(current);
+          if (current >= target) clearInterval(timer);
+        }, 16);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(c => counterObserver.observe(c));
+
+  // ── CASE STUDY ACCORDION ──
+  document.querySelectorAll('[data-case]').forEach(card => {
+    card.querySelector('.case-header').addEventListener('click', () => {
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('[data-case]').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    });
+  });
+
+  // ── SMOOTH ANCHOR SCROLL ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
