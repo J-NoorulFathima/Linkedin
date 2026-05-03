@@ -491,35 +491,237 @@
   .footer-links a:hover { color: rgba(255,255,255,0.6); }
   .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .services-grid { grid-template-columns: 1fr; }
-    .metrics-grid { grid-template-columns: 1fr; gap: 1px; }
-    .ba-grid { grid-template-columns: 1fr; }
-    .ba-before { display: none; }
-    .process-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .process-steps::before { display: none; }
-    .testimonials-grid { grid-template-columns: 1fr; }
-    .why-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .nav-mobile-btn { display: flex; }
-    .case-body-inner { grid-template-columns: 1fr 1fr; }
-    .hero-h1 { font-size: clamp(36px, 10vw, 54px); }
+  /* ── MOBILE NAV (hidden on desktop) ── */
+  .mobile-nav { display: none; }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — LAPTOP (901px – 1200px)
+  ═══════════════════════════════════════ */
+  @media (max-width: 1200px) {
+    :root { --max: 960px; }
+    .hero-h1 { font-size: clamp(38px, 5vw, 62px); }
+    .services-grid { gap: 16px; }
+    .service-card { padding: 36px 30px; }
+    .metrics-grid { gap: 1px; }
+    .process-steps { gap: 0; }
+    .testimonials-grid { gap: 16px; }
+    .why-grid { gap: 36px; }
+    .why-visual { padding: 36px 28px; }
   }
 
-  @media (max-width: 600px) {
-    section { padding: 72px 0; }
-    .container { padding: 0 20px; }
-    .hero-actions { flex-direction: column; }
-    .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
-    .trust-inner { gap: 20px; }
+  /* ═══════════════════════════════════════
+     RESPONSIVE — TABLET (601px – 900px)
+  ═══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    /* Nav */
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-mobile-btn { display: flex; }
+
+    /* Mobile nav drawer */
+    .mobile-nav {
+      flex-direction: column;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(8,8,8,0.97);
+      backdrop-filter: blur(24px);
+      z-index: 99;
+      align-items: center; justify-content: center; gap: 32px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+    .mobile-nav a {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px; color: var(--white);
+      text-decoration: none; letter-spacing: -0.02em;
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--blue-light); }
+    .mobile-nav .mobile-cta {
+      margin-top: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px; font-weight: 500;
+      background: #25D366; color: #fff;
+      padding: 14px 32px; border-radius: 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    /* Sections */
+    section { padding: 88px 0; }
+    .container { padding: 0 28px; }
+    .section-header { margin-bottom: 52px; }
+
+    /* Hero */
+    #hero { padding: 110px 0 72px; min-height: auto; }
+    .hero-content { max-width: 100%; }
+    .hero-h1 { font-size: clamp(34px, 6vw, 52px); }
+    .hero-sub { font-size: 17px; }
+    .hero-scroll-hint { display: none; }
+
+    /* Trust */
+    .trust-inner { gap: 16px; justify-content: flex-start; flex-wrap: wrap; }
     .trust-divider { display: none; }
-    .case-body-inner { grid-template-columns: 1fr; }
-    .process-steps { grid-template-columns: 1fr; }
-    .case-header { flex-wrap: wrap; gap: 12px; }
-    .bar-name { width: 100px; font-size: 12px; }
-    .footer-inner { flex-direction: column; text-align: center; }
-    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .trust-item { font-size: 12px; }
+
+    /* Services */
+    .services-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .service-card { padding: 32px 24px; }
+
+    /* Metrics */
+    .metrics-grid { grid-template-columns: repeat(3, 1fr); gap: 1px; }
+    .metric-block { padding: 40px 20px; }
+
+    /* Bar chart */
+    .bar-name { width: 120px; font-size: 12px; }
+
+    /* Before/After */
+    .ba-grid { grid-template-columns: 1fr; gap: 16px; }
+    .ba-before { display: flex; }
+
+    /* Cases */
+    .case-body-inner { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .case-header { padding: 22px 24px; }
+    .case-body-inner { padding: 24px; }
+
+    /* Process */
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .process-steps::before { display: none; }
+
+    /* Testimonials */
+    .testimonials-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .testi-card:last-child { grid-column: 1 / -1; max-width: 480px; margin: 0 auto; width: 100%; }
+
+    /* Why */
+    .why-grid { grid-template-columns: 1fr; gap: 48px; }
+    .why-visual { animation: none; }
+
+    /* CTA */
+    .cta-content h2 { font-size: clamp(32px, 5vw, 48px); }
+    .cta-content p { font-size: 16px; }
+
+    /* Footer */
+    .footer-inner { flex-direction: column; text-align: center; gap: 20px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — PHONE (≤ 600px)
+  ═══════════════════════════════════════ */
+  @media (max-width: 600px) {
+    /* Base */
+    section { padding: 72px 0; }
+    .container { padding: 0 18px; }
+    .section-header { margin-bottom: 40px; }
+    .section-header h2 { font-size: clamp(28px, 8vw, 38px); }
+    .section-header p { font-size: 15px; }
+
+    /* Nav */
+    nav { padding: 16px 0; }
+    .nav-logo { font-size: 19px; }
+
+    /* Hero */
+    #hero { padding: 100px 0 60px; }
+    .hero-badge { font-size: 11px; padding: 6px 12px; margin-bottom: 24px; }
+    .hero-h1 { font-size: clamp(30px, 9vw, 42px); margin-bottom: 20px; }
+    .hero-sub { font-size: 15px; margin-bottom: 32px; }
+    .hero-actions { flex-direction: column; gap: 12px; }
+    .btn-primary { width: 100%; justify-content: center; padding: 15px 24px; font-size: 15px; }
+    .btn-secondary { width: 100%; justify-content: center; padding: 14px 24px; font-size: 14px; }
+
+    /* Trust */
+    #trust { padding: 24px 0; }
+    .trust-inner { gap: 14px; }
+    .trust-item { font-size: 12px; gap: 7px; }
+
+    /* Services */
+    .services-grid { grid-template-columns: 1fr; gap: 12px; }
+    .service-card { padding: 28px 22px; }
+    .service-card h3 { font-size: 18px; }
+    .service-card p { font-size: 14px; }
+    .service-arrow { display: none; }
+
+    /* Metrics */
+    .metrics-grid { grid-template-columns: 1fr; gap: 1px; }
+    .metric-block { padding: 36px 24px; }
+    .metric-num { font-size: clamp(44px, 14vw, 60px); }
+
+    /* Bar chart */
+    .bar-chart { margin-top: 36px; }
+    .bar-row { gap: 10px; margin-bottom: 14px; }
+    .bar-name { width: 90px; font-size: 11px; }
+    .bar-val { font-size: 12px; width: 40px; }
+
+    /* Before/After */
+    .ba-grid { grid-template-columns: 1fr; }
+    .ba-before { display: flex; }
+    .ba-card { padding: 22px 18px; }
+    .ba-card-val { font-size: 24px; }
+
+    /* Cases */
+    .cases-list { gap: 10px; }
+    .case-header { padding: 18px 18px; flex-wrap: wrap; gap: 8px; }
+    .case-name { font-size: 16px; }
+    .case-role { font-size: 12px; }
+    .case-result { font-size: 18px; }
+    .case-toggle { margin-left: 8px; }
+    .case-body-inner { grid-template-columns: 1fr; padding: 20px 18px 24px; gap: 16px; }
+    .case-step p { font-size: 13px; }
+
+    /* Process */
+    .process-steps { grid-template-columns: 1fr; gap: 28px; }
+    .process-steps::before { display: none; }
+    .process-step { display: flex; align-items: flex-start; gap: 16px; text-align: left; padding: 0; }
+    .process-num { width: 48px; height: 48px; font-size: 18px; margin: 0; flex-shrink: 0; }
+    .process-step h3 { font-size: 15px; margin-bottom: 4px; }
+    .process-step p { font-size: 13px; }
+
+    /* Testimonials */
+    .testimonials-grid { grid-template-columns: 1fr; gap: 12px; }
+    .testi-card:last-child { grid-column: auto; max-width: 100%; }
+    .testi-card { padding: 28px 22px; }
+    .testi-text { font-size: 14px; }
+
+    /* Why */
+    .why-grid { grid-template-columns: 1fr; gap: 40px; }
+    .why-visual { padding: 28px 22px; animation: none; }
+    .why-point { gap: 14px; }
+    .why-point-text h3 { font-size: 15px; }
+    .why-point-text p { font-size: 13px; }
+    .why-points { gap: 24px; }
+    .why-visual > div:last-child { flex-direction: column; gap: 20px; }
+    .why-visual > div:last-child > div[style*="width:1px"] { display: none; }
+
+    /* CTA */
+    #cta { padding: 72px 0; }
+    .cta-content h2 { font-size: clamp(28px, 8vw, 40px); }
+    .cta-content p { font-size: 15px; margin-bottom: 32px; }
+    .cta-urgency { font-size: 11px; text-align: center; }
+    #cta .reveal.reveal-delay-3 { flex-direction: column; align-items: center; }
+    #cta .btn-primary { width: 100%; justify-content: center; font-size: 15px !important; padding: 16px 24px !important; }
+
+    /* Footer */
+    footer { padding: 32px 0; }
+    .footer-inner { gap: 16px; }
+    .footer-links { gap: 14px; }
+    .footer-links a { font-size: 12px; }
+
+    /* Inline why-visual stats row */
+    .why-stat-row { flex-direction: column !important; gap: 16px !important; }
+    .why-stat-divider { display: none !important; }
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — SMALL PHONE (≤ 380px)
+  ═══════════════════════════════════════ */
+  @media (max-width: 380px) {
+    .container { padding: 0 14px; }
+    .hero-h1 { font-size: 28px; }
+    .hero-sub { font-size: 14px; }
+    .section-header h2 { font-size: 26px; }
+    .metric-num { font-size: 42px; }
+    .case-result { font-size: 16px; }
+    .testi-card { padding: 22px 16px; }
+    .service-card { padding: 24px 18px; }
   }
 </style>
 </head>
@@ -543,7 +745,20 @@
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- MOBILE NAV DRAWER -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#proof" class="mobile-link">Results</a>
+  <a href="#cases" class="mobile-link">Case Studies</a>
+  <a href="#process" class="mobile-link">Process</a>
+  <a href="#testimonials" class="mobile-link">Testimonials</a>
+  <a href="https://wa.me/918825756068" target="_blank" rel="noopener" class="mobile-cta">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.137.563 4.14 1.537 5.874L0 24l6.27-1.507A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.785 9.785 0 01-5.032-1.388l-.36-.214-3.733.897.934-3.617-.235-.373A9.786 9.786 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+    Work With Me
+  </a>
+</div>
+
+
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
@@ -986,17 +1201,17 @@
             <div class="why-bar-track"><div class="why-bar-fill" data-width="92"></div></div>
           </div>
         </div>
-        <div style="margin-top:36px;padding-top:28px;border-top:1px solid var(--border);display:flex;gap:24px;">
+        <div style="margin-top:36px;padding-top:28px;border-top:1px solid var(--border);display:flex;gap:24px;" class="why-stat-row">
           <div>
             <div style="font-family:'Instrument Serif',serif;font-size:32px;color:#3B82F6;">4.9</div>
             <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;">Client Satisfaction</div>
           </div>
-          <div style="width:1px;background:var(--border);"></div>
+          <div style="width:1px;background:var(--border);" class="why-stat-divider"></div>
           <div>
             <div style="font-family:'Instrument Serif',serif;font-size:32px;">100%</div>
             <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;">Retention Rate</div>
           </div>
-          <div style="width:1px;background:var(--border);"></div>
+          <div style="width:1px;background:var(--border);" class="why-stat-divider"></div>
           <div>
             <div style="font-family:'Instrument Serif',serif;font-size:32px;color:#4ade80;">3×</div>
             <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;">Avg. ROI Year 1</div>
@@ -1051,6 +1266,32 @@
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── MOBILE MENU ──
+  const mobileBtn = document.getElementById('mobileBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  let menuOpen = false;
+  mobileBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileNav.classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const spans = mobileBtn.querySelectorAll('span');
+    if (menuOpen) {
+      spans[0].style.cssText = 'transform:rotate(45deg) translate(5px,5px)';
+      spans[1].style.cssText = 'opacity:0';
+      spans[2].style.cssText = 'transform:rotate(-45deg) translate(5px,-5px)';
+    } else {
+      spans.forEach(s => s.style.cssText = '');
+    }
+  });
+  document.querySelectorAll('.mobile-link, .mobile-cta').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+      mobileBtn.querySelectorAll('span').forEach(s => s.style.cssText = '');
+    });
   });
 
   // ── SCROLL REVEAL ──
